@@ -6,8 +6,10 @@
         xmlns:local="clr-namespace:ball_simulation"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
+    <Grid>
     <Canvas Name="KubasCanvas">
         <Ellipse Width="10" Height="10" Fill="Chartreuse" Canvas.Top="150" Canvas.Left="200" Name="ball1"/>
         
     </Canvas>
+    </Grid>
 </Window>
