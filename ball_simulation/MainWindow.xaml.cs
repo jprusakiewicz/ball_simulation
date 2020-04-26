@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace ball_simulation
@@ -12,14 +14,53 @@ namespace ball_simulation
         DispatcherTimer _timer = new DispatcherTimer();
         private double vx = 50.0;
         private double vy = 50.0;
+        
+        Ellipse[] _balls = new Ellipse[2];
         public MainWindow()
         {
+            
+            var elydupa = new Ellipse();
+            var elyupa = new Ellipse();
+            // spawnBalls();
             InitializeComponent();
+            
+           
+            
+            elydupa.Height = 10;
+            elydupa.Width = 10;
+            elydupa.Stroke = Brushes.Blue;
+            Canvas.SetLeft(elydupa, 5);
+            Canvas.SetTop(elydupa, 5);
+            KubasCanvas.Children.Add(elydupa);
+            
+            
+            elyupa.Height = 10;
+            elyupa.Width = 10;
+            elyupa.Stroke = Brushes.MediumVioletRed;
+            Canvas.SetLeft(elyupa, 215);
+            Canvas.SetTop(elyupa, 115);
+            KubasCanvas.Children.Add(elyupa);
+            
+            
             _timer.Interval = TimeSpan.FromSeconds(0.05);
             _timer.IsEnabled = true;
             _timer.Tick += animation;
+
         }
 
+        void spawnBalls()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                _balls[i] = new Ellipse();
+                _balls[i].Width = 10;
+                _balls[i].Height = 10;
+                _balls[i].Fill = Brushes.Brown;
+                Canvas.SetTop(_balls[i], i * 20);
+                Canvas.SetLeft(_balls[i], i * 20);
+                KubasCanvas.Children.Add(_balls[i]);
+            }
+        }
         void animation(object sender, EventArgs e)
         {
             double x = Canvas.GetLeft(ball1);
