@@ -1,0 +1,15 @@
+C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\bin\Debug\ball_simulation.exe.config
+C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\bin\Debug\ball_simulation.exe
+C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\bin\Debug\ball_simulation.pdb
+C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\obj\Debug\ball_simulation.csprojAssemblyReference.cache
+C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\obj\Debug\MainWindow.g.cs
+C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\obj\Debug\App.g.cs
+C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\obj\Debug\ball_simulation_MarkupCompile.cache
+C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\obj\Debug\ball_simulation_MarkupCompile.lref
+C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\obj\Debug\MainWindow.baml
+C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\obj\Debug\ball_simulation.g.resources
+C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\obj\Debug\ball_simulation.Properties.Resources.resources
+C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\obj\Debug\ball_simulation.csproj.GenerateResource.cache
+C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\obj\Debug\ball_simulation.csproj.CoreCompileInputs.cache
+C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\obj\Debug\ball_simulation.exe
+C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\obj\Debug\ball_simulation.pdb
