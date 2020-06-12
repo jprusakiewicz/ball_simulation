@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -17,18 +18,17 @@ namespace ball_simulation
 
         public Ball(double x, double y, double vx, double vy)
         {
-           
-            this._vx = vx;
-            this._vy = vy;
+            _vx = vx * 5;
+            _vy = vy * 5;
             _pozX = x;
             _pozY = y;
             
             body = new Ellipse();
             
-            body.Width = 14;
-            body.Height = 14;
+            body.Width = 6;
+            body.Height = 6;
             radius = (int)body.Width;
-            mass = (int) ( radius * 1.3);
+            mass = (int) ( radius*1.2);
             
             body.Fill = Brushes.Green;
             Canvas.SetTop(body, _pozX);
@@ -44,62 +44,61 @@ namespace ball_simulation
             return body;
         }
 
-        public void MoveBall(double sec)
+        public void MoveBall(double sec, double ActualWidth, double ActualHeight)
         {
+            //if(sec ==0)
+          // sec = 0.5f;
+            //Debug.WriteLine("sec"+sec);
             _pozX += _vx * sec;
-            Canvas.SetLeft(body, _pozX);
-            
+            if (_pozX <= 0.0 || _pozX >= ActualWidth - this.radius)
+            {
+                _vx *= -1;
+            }
+
             _pozY += _vy * sec;
-            Canvas.SetTop(body, _pozY);
+            if (_pozY <= 0.0 || _pozY >= ActualHeight - this.radius)
+            {
+                _vy *= -1;
+            }
         }
-        public double Dt(Ball b)
-        {   Ball a = this;
-            if (a == b) return 0;
-            double dx  = b._pozX - a._pozX; 
-            double dy  = b._pozY - a._pozY;  
-            double dvx = b._vx - a._vx;   
-            double dvy = b._vy - a._vy;   
-            double dvdr = dx*dvx + dy*dvy;    
-            if(dvdr > 0) return 0;    
-            double dvdv = dvx*dvx + dvy*dvy;    
-            double drdr = dx*dx + dy*dy;    
-            double sigma = a.radius + b.radius;    
-            double d = (dvdr*dvdr) - dvdv * (drdr - sigma*sigma);   
-            if (d < 0) return 0;    
-            return -(dvdr + Math.Sqrt(d)) / dvdv;
-            
+
+        public void DrawBall()
+        {
+            Canvas.SetLeft(body, _pozX);
+            Canvas.SetTop(body, _pozY);
         }
 
         //Prediction
         public double TimeToHit(Ball that)
         {
-            if(GetBall() == that.GetBall()) return Double.PositiveInfinity;
-            double dx = that._pozX - this._pozX;
-            double dy = that._pozY - this._pozY;
+            Ball current = this;
+            if(current.GetBall() == that.GetBall()) return Double.PositiveInfinity;
+            double dx = that._pozX - current._pozX;
+            double dy = that._pozY - current._pozY;
 
-            double dvx = that._vx - this._vx;
-            double dvy = that._vy - that._vy;
+            double dvx = that._vx - current._vx;
+            double dvy = that._vy - current._vy;
             
             double dvdr = dx * dvx + dy * dvy;
             if(dvdr > 0) return Double.PositiveInfinity;
 
             double dvdv = dvx * dvx + dvy * dvy;
             double drdr = dx * dx + dy * dy;
-            double sigma = this.radius + that.radius;
+            double sigma = current.radius + that.radius;
             double d = (dvdr * dvdr) - dvdv * (drdr - sigma * sigma);
             if(d < 0) return Double.PositiveInfinity;
-            return -(dvdr + Math.Sqrt(d)) / dvdv;
+            return -((dvdr + Math.Sqrt(d)) / dvdv);
 
         }
         public double TimeToHitVerticalWall()
         {
-            if      (_vx > 0) return (1.0 - _pozX - radius) / _vx;
+            if      (_vx > 0) return (525 - _pozX - radius) / _vx;
             else if (_vx < 0) return (radius - _pozX) / _vx;  
             else             return Double.PositiveInfinity;
         }
         public double TimeToHitHorizontalWall()
         {
-            if      (_vy > 0) return (1.0 - _pozY - radius) / _vy;
+            if      (_vy > 0) return (300- _pozY - radius) / _vy;
             else if (_vy < 0) return (radius - _pozY) / _vy;
             else             return Double.PositiveInfinity;
         }
@@ -124,13 +123,12 @@ namespace ball_simulation
             this._count++;
             that._count++;
         }
-        public void BounceOffVerticalWall(double actualWidth)
+        public void BounceOffVerticalWall()
         {
-
             _vx = -_vx;
             _count++;
         }
-        public void BounceOffHorizontalWall(double actualHeight)
+        public void BounceOffHorizontalWall()
         {
             _vy = -_vy;
             _count++;
