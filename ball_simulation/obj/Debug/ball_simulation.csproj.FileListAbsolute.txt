@@ -13,3 +13,8 @@ C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\obj\De
 C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\obj\Debug\ball_simulation.csproj.CoreCompileInputs.cache
 C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\obj\Debug\ball_simulation.exe
 C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\obj\Debug\ball_simulation.pdb
+C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\bin\Debug\Priority Queue.dll
+C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\bin\Debug\System.Threading.Thread.dll
+C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\bin\Debug\Priority Queue.pdb
+C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\bin\Debug\Priority Queue.xml
+C:\Users\jakub.prusakiewicz\RiderProjects\ball_simulation\ball_simulation\obj\Debug\ball_simulation.csproj.CopyComplete

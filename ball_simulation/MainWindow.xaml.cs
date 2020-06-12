@@ -15,36 +15,39 @@ namespace ball_simulation
     {
         Random rand = new Random();
         DispatcherTimer _timer = new DispatcherTimer();
-        public static int numOfBalls = 100;
+        public static int numOfBalls = 10;
         Ball[] balls = new Ball[numOfBalls];
+        private CollisionSystem _system;
         public MainWindow()
         {
             InitializeComponent();
-            spawnBalls();
+            SpawnBalls();
 
             _timer.Interval = TimeSpan.FromSeconds(0.05);
             _timer.IsEnabled = true;
-            _timer.Tick += animation;
+            _timer.Tick += Animation;
 
         }
 
-        public void spawnBalls()
+        private void SpawnBalls()
         {
             for (int i = 0; i < numOfBalls - 1; i++)
             {
                 
                 balls[i] = new Ball(rand.Next(15, 480), rand.Next(15, 300), rand.Next(-80, 80), rand.Next(-80, 80));
-                KubasCanvas.Children.Add(balls[i].getBall());
-
+                KubasCanvas.Children.Add(balls[i].GetBody());
+                _system = new CollisionSystem(balls);
             }
         }
-        void animation(object sender, EventArgs e)
+
+        private void Animation(object sender, EventArgs e)
         {
-            for (int i = 0; i < numOfBalls-1; i++)
-            {
-                balls[i].moveBall(_timer.Interval.TotalSeconds, KubasCanvas.ActualWidth, KubasCanvas.ActualHeight);
-            }
-            
+            // for (int i = 0; i < numOfBalls-1; i++)
+            // {
+            //     balls[i].MoveBall(_timer.Interval.TotalSeconds);
+            // }
+            _system.Simulate((int) KubasCanvas.ActualWidth, (int) KubasCanvas.ActualHeight, _timer.Interval.TotalSeconds);
+
         }
     }
 }
