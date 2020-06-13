@@ -23,7 +23,7 @@ namespace ball_simulation
             InitializeComponent();
             SpawnBalls();
 
-            _timer.Interval = TimeSpan.FromSeconds(0.2);
+            _timer.Interval = TimeSpan.FromSeconds(0.02);
             _timer.IsEnabled = true;
             _timer.Tick += Animation;
 
@@ -34,7 +34,7 @@ namespace ball_simulation
             for (int i = 0; i < numOfBalls - 1; i++)
             {
                 
-                balls[i] = new Ball(rand.Next(15, 480), rand.Next(15, 300), 1, 1);
+                balls[i] = new Ball(rand.Next(15, 480), rand.Next(15, 300), rand.Next(-5, 5), rand.Next(-5, 5));
                 KubasCanvas.Children.Add(balls[i].GetBody());
                 _system = new CollisionSystem(balls);
             }
@@ -47,8 +47,8 @@ namespace ball_simulation
             //     balls[i].MoveBall(_timer.Interval.TotalSeconds);
             // }
             _system.Simulate((int) KubasCanvas.ActualWidth, (int) KubasCanvas.ActualHeight);
-            KubasCanvas.UpdateLayout();
-            KubasCanvas.InvalidateVisual();
+            // KubasCanvas.UpdateLayout();
+            // KubasCanvas.InvalidateVisual();
 
         }
     }
