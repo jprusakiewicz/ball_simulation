@@ -22,6 +22,7 @@
           </e>
         </e>
         <e p="packages.config" t="Include" />
+        <e p="PriorityQueue.cs" t="Include" />
         <e p="Properties" t="Include">
           <e p="AssemblyInfo.cs" t="Include" />
           <e p="Resources.Designer.cs" t="Include" />

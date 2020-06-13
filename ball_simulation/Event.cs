@@ -1,4 +1,6 @@
-﻿namespace ball_simulation
+﻿using System;
+
+namespace ball_simulation
 {
     public class Event
     {
@@ -14,17 +16,27 @@
             B = b;
             if (a != null) _countA = a.Count;
             else _countA = -1;
-            if (b != null) _countA = b.Count;
+            if (b != null) _countB = b.Count; //todo
             else _countB = -1;
         }
 
-        public bool isValid(double t) { //todo
+        public Boolean isValid(double t)
+        {
+            //todo
             if (Time < t) return false;
-            if (A != null && A.Count != _countA) return false;
-            if (B != null && B.Count != _countB) return false;
-            return true;
+            if (A != null && A.Count == _countA) return true;
+            if (B != null && B.Count == _countB) return true;
+            return false;
         }
-        
-       
+
+        public Ball getA()
+        {
+            return A;
+        }
+
+        public Ball getB()
+        {
+            return B;
+        }
     }
 }

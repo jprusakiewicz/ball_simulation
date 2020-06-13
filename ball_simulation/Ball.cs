@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -9,27 +11,30 @@ namespace ball_simulation
 {
     public class Ball
     {
-        private double _vx, _vy; //velocity
-        private double _pozX, _pozY; //position
-        private Ellipse body;
-        private int radius;
-        private int mass;
-        private int _count; //number of collisions
+        public double _vx { get; private set; } //velocity
+        public double _vy { get; private set; } //velocity
+        public int _pozX { get; private set; } //position
 
-        public Ball(double x, double y, double vx, double vy)
+        public int _pozY; //position
+        public Ellipse body { get; private set; }
+        public int radius { get; private set; }
+        public double mass { get; private set; }
+        public int _count { get; private set; } //number of collisions
+
+        public Ball(int x, int y, double vx, double vy)
         {
             _vx = vx;
             _vy = vy;
             _pozX = x;
             _pozY = y;
-            
+
             body = new Ellipse();
-            
+
             body.Width = 9;
             body.Height = 9;
-            radius = (int)body.Width;
-            mass = (int) ( radius*0.8);
-            
+            radius = (int) body.Width;
+            mass = (radius * 0.8);
+
             body.Fill = Brushes.Green;
             Canvas.SetTop(body, _pozX);
             Canvas.SetLeft(body, _pozY);
@@ -39,27 +44,11 @@ namespace ball_simulation
         {
             return this;
         }
-        public Ellipse GetBody()
-        {
-            return body;
-        }
 
         public void MoveBall(double sec)
         {
-            //if(sec ==0)
-          // sec = 0.5f;
-            //Debug.WriteLine("sec"+sec);
-            _pozX += _vx * sec;
-            // if (_pozX <= 0.0 || _pozX >= ActualWidth - this.radius)
-            // {
-            //     _vx *= -1;
-            // }
-
-            _pozY += _vy * sec;
-            // if (_pozY <= 0.0 || _pozY >= ActualHeight - this.radius)
-            // {
-            //     _vy *= -1;
-            // }
+            _pozX += (int) (_vx * sec);
+            _pozY += (int) (_vy * sec);
         }
 
         public void DrawBall()
@@ -71,14 +60,15 @@ namespace ball_simulation
         //Prediction
         public double TimeToHit(Ball that)
         {
-            Ball current = this;
-            if(current.GetBall() == that.GetBall()) return Double.PositiveInfinity;
-            double dx = that._pozX - current._pozX;
-            double dy = that._pozY - current._pozY;
+            //Ball current = this;
+            if (this == that) return double.PositiveInfinity;
 
-            double dvx = that._vx - current._vx;
-            double dvy = that._vy - current._vy;
-            
+            double dx = that._pozX - _pozX;
+            double dy = that._pozY - _pozY;
+
+            double dvx = that._vx - _vx;
+            double dvy = that._vy - _vy;
+
             double dvdr = dx * dvx + dy * dvy;
 
             if (dvdr > 0) return double.PositiveInfinity;
@@ -88,25 +78,25 @@ namespace ball_simulation
             double sigma = this.radius + that.radius;
             double d = (dvdr * dvdr) - dvdv * (drdr - sigma * sigma);
 
-
             if (d < 0) return double.PositiveInfinity;
 
             return -(dvdr + Math.Sqrt(d)) / dvdv;
-
-
         }
+
         public double TimeToHitVerticalWall()
         {
-            if      (_vx > 0) return (525 - _pozX - radius) / _vx; //todo windowwith
-            else if (_vx < 0) return (radius - _pozX) / _vx;  
-            else             return Double.PositiveInfinity;
+            if (_vx > 0) return (350 - _pozX - radius) / _vx; //todo windowwith
+            else if (_pozX < 0) return (radius - _pozX) / _vx;
+            else return double.PositiveInfinity;
         }
+
         public double TimeToHitHorizontalWall()
         {
-            if      (_vy > 0) return (300- _pozY - radius) / _vy; //todo window height
-            else if (_vy < 0) return (radius - _pozY) / _vy;
-            else             return Double.PositiveInfinity;
+            if (_vy > 0) return (350 - _pozY - radius) / _vy; //todo window height
+            else if (_pozY < 0) return (radius - _pozY) / _vy;
+            else return double.PositiveInfinity;
         }
+
         //Rezolution
         public void BounceOff(Ball that)
         {
@@ -128,7 +118,7 @@ namespace ball_simulation
             double aYThat = (2 * this.mass) / (massSum) * this._vy;
             double bYThat = (that.mass - this.mass) / massSum * that._vy;
             that._vx = aYThat + bYThat;
-            
+
             // double dx = that._pozX - this._pozX;
             // double dy = that._pozY - this._pozY;
             //
@@ -148,11 +138,13 @@ namespace ball_simulation
             this._count++;
             that._count++;
         }
+
         public void BounceOffVerticalWall()
         {
             _vx = -_vx;
             _count++;
         }
+
         public void BounceOffHorizontalWall()
         {
             _vy = -_vy;
@@ -160,8 +152,10 @@ namespace ball_simulation
         }
 
         public int Count => _count;
+
+        public int getCnt()
+        {
+            return _count;
+        }
     }
-    
-
-
 }
