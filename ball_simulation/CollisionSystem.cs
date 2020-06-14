@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -14,6 +15,7 @@ namespace ball_simulation
         private double t = 0.0;
         private Ball[] _balls;
         public Canvas c;
+        
 
         public CollisionSystem(Ball[] balls)
         {
@@ -40,24 +42,22 @@ namespace ball_simulation
 
         public void Simulate(int actualWidth, int actualHeight, Canvas kubasCanvas)
         {
+            var dpd = DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, typeof(Canvas));
+
             c = kubasCanvas;
          _pq = new FastPriorityQueue<Event>(50000000);
          for (int i = 0; i < _balls.Length-1; i++) Predict(_balls[i], 10000000);
-
          
            while (_pq.Count !=0)
           {
-
-             // // ReSharper disable once InconsistentNaming
+              // // ReSharper disable once InconsistentNaming
              Event _event = _pq.Dequeue();
              if (!_event.isValid(t)) continue;
-             
              
                  Ball a = _event.A;
                  Ball b = _event.B;
 
                  if (a == null && b == null)continue;
-                     
                  
                  for (int i = 0; i < _balls.Length; i++)
                  {
@@ -65,9 +65,15 @@ namespace ball_simulation
                      _balls[i].Draw();
                  }
                  t = _event.Time;
-                
-                 CompositionTarget.Rendering += DoUpdates;
                  
+                 c.Background = Brushes.Aqua;
+                 c.UpdateLayout();
+                 c.InvalidateVisual();
+                 // c.Children.Clear();
+                 // for (int i = 0; i < _balls.Length; i++)
+                 // {
+                 //     c.Children.Add(_balls[i].GetBody());
+                 // }
 
                  if (a != null && b != null) a.BounceOff(b);
                  else if (a != null && b == null) a.BounceOffVerticalWall(actualWidth);
@@ -75,15 +81,7 @@ namespace ball_simulation
 
                   Predict(a, 1000000);
                   Predict(b, 1000000);
-         }
+          }
         }
-        
-        private void DoUpdates(object sender, EventArgs e)
-        {
-            c.Background = Brushes.Aqua;
-            c.UpdateLayout();
-            c.InvalidateVisual();
-        }
-        
     }
 }

@@ -5,7 +5,7 @@ namespace ball_simulation
     public class Event : FastPriorityQueueNode
     {
         private int _countA, _countB;
-
+        
         public Ball A { get; }
 
         public Ball B { get; }
@@ -28,10 +28,8 @@ namespace ball_simulation
             return this.Time - that.Time;
         }
         
-        
         public bool isValid(double t)
         {
-            
             if (A != null && A.Count != _countA) return false;
             if (B != null && B.Count != _countB) return false;
             return true;

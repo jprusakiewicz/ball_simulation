@@ -50,13 +50,11 @@ namespace ball_simulation
         {
             _pozX += _vx * t;
             _pozY +=  _vy * t;
-
-
         }
 
         public void Draw()
         {
-            Debug.WriteLine("dzialam");
+            //Debug.WriteLine("dzialam");
             body.Fill = Brushes.Red;
             Canvas.SetLeft(body, _pozX);
             Canvas.SetTop(body, _pozY);
@@ -135,7 +133,4 @@ namespace ball_simulation
 
         public int Count => _count;
     }
-    
-
-
 }
