@@ -29,10 +29,11 @@ namespace ball_simulation
         }
         
         
-        public bool isValid()
+        public bool isValid(double t)
         {
-            if (A != null && A.Count == _countA) return false;
-            if (B != null && B.Count == _countB) return false;
+            
+            if (A != null && A.Count != _countA) return false;
+            if (B != null && B.Count != _countB) return false;
             return true;
         }
     }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq.Expressions;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -20,8 +22,6 @@ namespace ball_simulation
            
             _vx = vx;
             _vy = vy;
-            // _vx = 10000;
-            // _vy = 10000;
             _pozX = x;
             _pozY = y;
             
@@ -30,7 +30,7 @@ namespace ball_simulation
             body.Width = 9;
             body.Height = 9;
             radius = body.Width;
-            mass = radius * 0.5;
+            mass = radius * 1.5;
             
             body.Fill = Brushes.Green;
             Canvas.SetTop(body, _pozX);
@@ -49,37 +49,41 @@ namespace ball_simulation
         public void MoveBall(double t)
         {
             _pozX += _vx * t;
-            
-            _pozY += _vy * t;
+            _pozY +=  _vy * t;
+
+
         }
 
         public void Draw()
         {
+            Debug.WriteLine("dzialam");
             body.Fill = Brushes.Red;
-            Canvas.SetLeft(body, (int)_pozX);
-            Canvas.SetTop(body, (int)_pozY);
+            Canvas.SetLeft(body, _pozX);
+            Canvas.SetTop(body, _pozY);
         }
 
         //Prediction
         public double TimeToHit(Ball that)
         {
-            if(this.GetBall() == that.GetBall()) return Double.PositiveInfinity;
+            if(this == that) return Double.PositiveInfinity;
             double dx = that._pozX - this._pozX;
             double dy = that._pozY - this._pozY;
-
+            
             double dvx = that._vx - this._vx;
+            if (dvx ==0)
+                Console.WriteLine("bug");
             double dvy = that._vy - that._vy;
             
             double dvdr = dx * dvx + dy * dvy;
             if(dvdr > 0) return Double.PositiveInfinity;
-
+            
             double dvdv = dvx * dvx + dvy * dvy;
             double drdr = dx * dx + dy * dy;
             double sigma = this.radius + that.radius;
             double d = (dvdr * dvdr) - dvdv * (drdr - sigma * sigma);
             if(d < 0) return Double.PositiveInfinity;
             return -(dvdr + Math.Sqrt(d)) / dvdv;
-
+            
         }
         public double TimeToHitVerticalWall()
         {
@@ -99,7 +103,7 @@ namespace ball_simulation
         {
             double dx = that._pozX - this._pozX;
             double dy = that._pozY - this._pozY;
-
+            
             double dvx = that._vx - this._vx;
             double dvy = that._vy - this._vy;
             
@@ -110,10 +114,11 @@ namespace ball_simulation
             double Jx = J * dx / dist;
             double Jy = J * dy / dist;
             
-            this._vx += Jx / this.mass;
-            this._vy += Jy / this.mass;
-            that._vx -= Jx / that.mass;
-            that._vy -= Jy / that.mass;
+            this._vx += (Jx+1 / this.mass);
+            this._vy += (Jy +1/ this.mass);
+            that._vx -= (Jx +1/ that.mass);
+            that._vy -= (Jy +1/ that.mass);
+            
             this._count++;
             that._count++;
         }
